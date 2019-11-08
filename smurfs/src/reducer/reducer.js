@@ -1,25 +1,40 @@
 import * as ACTIONS from '../actions/actions';
 
 const initialState = {
+  //Form state for adding / editing smurfs
   smurfFormInput: {
     name: '',
     age: '',
     height: ''
   },
+
+  //List of smurfs from API
   smurfs: [],
+
+  //boolean to change functionality of existing form
   isEditMode: false,
+
+  //ID of the smurf we are editing (if in edit mode)
   editSmurfId: null,
+
+  //On request error, this will be set
   error: '',
+
+  //When making requests this will be true
   isFetching: false
 };
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
+    //Form input handling
     case ACTIONS.HANDLE_SMURF_FORM_INPUTS:
       return {
         ...state,
         smurfFormInput: action.payload
       }
+
+
+
     case ACTIONS.FETCH_SMURFS_START:
       return {
         ...state,
@@ -37,6 +52,9 @@ export const reducer = (state = initialState, action) => {
         error: action.payload,
         isFetching: false
       }
+
+
+
     case ACTIONS.ADD_SMURF_START:
       return {
         ...state,
@@ -59,6 +77,9 @@ export const reducer = (state = initialState, action) => {
         error: action.payload,
         isFetching: false
       }
+
+
+
     case ACTIONS.EDIT_SMURF_START:
       return {
         ...state,
@@ -83,6 +104,9 @@ export const reducer = (state = initialState, action) => {
         error: action.payload,
         isFetching: false
       }
+
+
+
     case ACTIONS.DELETE_SMURF_START:
       return {
         ...state,
@@ -100,6 +124,9 @@ export const reducer = (state = initialState, action) => {
         error: action.payload,
         isFetching: false
       }
+
+
+
     case ACTIONS.EDIT_SMURF_MODE:
       return {
         ...state,

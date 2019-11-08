@@ -1,8 +1,7 @@
+/*** ACTIONS ***/
 export const FETCH_SMURFS_START = "FETCH_SMURFS_START";
 export const FETCH_SMURFS_SUCCESS = "FETCH_SMURFS_SUCCESS";
 export const FETCH_SMURFS_FAIL = "FETCH_SMURFS_FAIL";
-
-export const HANDLE_SMURF_FORM_INPUTS = "HANDLE_SMURF_FORM_INPUTS";
 
 export const ADD_SMURF_START = "ADD_SMURF_START";
 export const ADD_SMURF_SUCCESS = "ADD_SMURF_SUCCESS";
@@ -17,7 +16,13 @@ export const DELETE_SMURF_START = "DELETE_SMURF_START";
 export const DELETE_SMURF_SUCCESS = "DELETE_SMURF_SUCCESS";
 export const DELETE_SMURF_FAIL = "DELETE_SMURF_FAIL";
 
-export const getSmurfs = () => dispatch => {
+export const HANDLE_SMURF_FORM_INPUTS = "HANDLE_SMURF_FORM_INPUTS";
+/*** / ACTIONS / */
+
+/*** ACTION CREATORS ***/
+
+//Get all smurfs from server
+export const fetchSmurfs = () => dispatch => {
   dispatch({ type: FETCH_SMURFS_START });
 
   fetch('http://localhost:3333/smurfs')
@@ -26,18 +31,21 @@ export const getSmurfs = () => dispatch => {
     .catch(error => dispatch({ type: FETCH_SMURFS_FAIL, payload: error }));
 }
 
-export const handleSmurfForm = inputs => {
+//Handle input change (form state is held in store)
+export const handleSmurfFormChange = inputs => {
   return {
     type: HANDLE_SMURF_FORM_INPUTS,
     payload: inputs
   }
 }
 
+//Depending on editmode, our form will either submit a new smurf, or edit an existing one (POST/PUT).
 export const handleSmurfFormSubmit = (formData, isEditMode, editSmurfId) => dispatch => {
   if (isEditMode) {
-    console.log('Editing', editSmurfId, formData)
     dispatch({ type: EDIT_SMURF_START });
 
+    //Edit an existing smurf via ID.
+    //form inputs are sent in the body of the request
     fetch(`http://localhost:3333/smurfs/${editSmurfId}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
@@ -51,6 +59,8 @@ export const handleSmurfFormSubmit = (formData, isEditMode, editSmurfId) => disp
 
     dispatch({ type: ADD_SMURF_START });
 
+    //Add a new smurf with a POST to the API
+    //smurf data is in the body of the request
     fetch('http://localhost:3333/smurfs', {
       method: 'POST',
       body: JSON.stringify(formData),
@@ -62,6 +72,7 @@ export const handleSmurfFormSubmit = (formData, isEditMode, editSmurfId) => disp
   }
 }
 
+//Deletes a smurf from the server via ID
 export const deleteSmurf = id => dispatch => {
   dispatch({ type: DELETE_SMURF_START });
 
@@ -73,9 +84,11 @@ export const deleteSmurf = id => dispatch => {
     .catch(error => dispatch({ type: DELETE_SMURF_FAIL, payload: error }));
 }
 
+//This action enables edit mode in the application, which will set form inputs with the data of the smurf we are editi
 export const editSmurf = smurf => {
   return {
     type: EDIT_SMURF_MODE,
     payload: smurf
   }
 }
+/*** / ACTION CREATORS / ***/

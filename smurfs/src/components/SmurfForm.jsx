@@ -1,33 +1,40 @@
-import React from 'react'
+import React from 'react';
 
-import { handleSmurfForm, handleSmurfFormSubmit } from '../actions/actions';
+import { handleSmurfFormChange, handleSmurfFormSubmit } from '../actions/actions';
 import { useSelector, useDispatch } from 'react-redux';
 
 const SmurfForm = () => {
-  const input = useSelector(state => state.smurfFormInput);
+  //Form inputs
+  const inputs = useSelector(state => state.smurfForminputs);
+
+  //Edit mode bool
   const isEditMode = useSelector(state => state.isEditMode);
+
+  //Smurf id 
   const editSmurfId = useSelector(state => state.editSmurfId);
+
+  //Dispatch hook
   const dispatch = useDispatch();
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (input.name.length > 0 && input.age > 0 && input.height.length > 0) {
-      dispatch(handleSmurfFormSubmit(input, isEditMode, editSmurfId));
+    if (inputs.name.length > 1 && inputs.age > 1 && inputs.height.length > 2) {
+      dispatch(handleSmurfFormSubmit(inputs, isEditMode, editSmurfId));
     }
   }
 
   const handleChange = e => {
-    dispatch(handleSmurfForm({ ...input, [e.target.name]: e.target.value }))
+    dispatch(handleSmurfFormChange({ ...inputs, [e.target.name]: e.target.value }));
   }
 
   return (
     <form className="smurf-form" onSubmit={handleSubmit}>
-      <input type="text" name="name" placeholder="Enter name..." value={input.name} onChange={handleChange} />
-      <input type="number" name="age" placeholder="Enter age..." value={input.age} onChange={handleChange} />
-      <input type="text" name="height" placeholder="Enter height..." value={input.height} onChange={handleChange} />
+      <input type="text" name="name" placeholder="Enter name..." value={inputs.name} onChange={handleChange} required />
+      <input type="number" name="age" placeholder="Enter age..." value={inputs.age} onChange={handleChange} required />
+      <input type="text" name="height" placeholder="Enter height..." value={inputs.height} onChange={handleChange} required />
       <button>{isEditMode ? 'Edit Smurf' : 'Submit'}</button>
     </form>
   )
 }
 
-export default SmurfForm
+export default SmurfForm;
