@@ -45,9 +45,31 @@ export const reducer = (state = initialState, action) => {
     case ACTIONS.HANDLE_SMURF_FORM_SUBMIT_SUCCESS:
       return {
         ...state,
-        smurfs: action.payload
+        smurfs: action.payload,
+        smurfFormInput: {
+          name: '',
+          age: '',
+          height: ''
+        }
       }
     case ACTIONS.HANDLE_SMURF_FORM_SUBMIT_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        isFetching: false
+      }
+    case ACTIONS.DELETE_SMURF_START:
+      return {
+        ...state,
+        error: '',
+        isFetching: true
+      }
+    case ACTIONS.DELETE_SMURF_SUCCESS:
+      return {
+        ...state,
+        smurfs: action.payload,
+      }
+    case ACTIONS.DELETE_SMURF_FAIL:
       return {
         ...state,
         error: action.payload,
