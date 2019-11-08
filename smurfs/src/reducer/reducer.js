@@ -7,6 +7,7 @@ const initialState = {
     height: ''
   },
   smurfs: [],
+  isEditMode: false,
   error: '',
   isFetching: false
 };
