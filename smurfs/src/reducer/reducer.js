@@ -8,12 +8,18 @@ const initialState = {
   },
   smurfs: [],
   isEditMode: false,
+  editSmurfId: null,
   error: '',
   isFetching: false
 };
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ACTIONS.HANDLE_SMURF_FORM_INPUTS:
+      return {
+        ...state,
+        smurfFormInput: action.payload
+      }
     case ACTIONS.FETCH_SMURFS_START:
       return {
         ...state,
@@ -31,18 +37,13 @@ export const reducer = (state = initialState, action) => {
         error: action.payload,
         isFetching: false
       }
-    case ACTIONS.HANDLE_SMURF_FORM_INPUTS:
-      return {
-        ...state,
-        smurfFormInput: action.payload
-      }
-    case ACTIONS.HANDLE_SMURF_FORM_SUBMIT_START:
+    case ACTIONS.ADD_SMURF_START:
       return {
         ...state,
         error: '',
         isFetching: true
       }
-    case ACTIONS.HANDLE_SMURF_FORM_SUBMIT_SUCCESS:
+    case ACTIONS.ADD_SMURF_SUCCESS:
       return {
         ...state,
         smurfs: action.payload,
@@ -52,7 +53,31 @@ export const reducer = (state = initialState, action) => {
           height: ''
         }
       }
-    case ACTIONS.HANDLE_SMURF_FORM_SUBMIT_FAIL:
+    case ACTIONS.ADD_SMURF_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        isFetching: false
+      }
+    case ACTIONS.EDIT_SMURF_START:
+      return {
+        ...state,
+        error: '',
+        isFetching: true
+      }
+    case ACTIONS.EDIT_SMURF_SUCCESS:
+      return {
+        ...state,
+        smurfs: action.payload,
+        smurfFormInput: {
+          name: '',
+          age: '',
+          height: ''
+        },
+        isEditMode: false,
+        editSmurfId: null
+      }
+    case ACTIONS.EDIT_SMURF_FAIL:
       return {
         ...state,
         error: action.payload,
@@ -74,6 +99,17 @@ export const reducer = (state = initialState, action) => {
         ...state,
         error: action.payload,
         isFetching: false
+      }
+    case ACTIONS.EDIT_SMURF_MODE:
+      return {
+        ...state,
+        smurfFormInput: {
+          name: action.payload.name,
+          age: action.payload.age,
+          height: action.payload.height
+        },
+        isEditMode: true,
+        editSmurfId: action.payload.id
       }
     default:
       return state;

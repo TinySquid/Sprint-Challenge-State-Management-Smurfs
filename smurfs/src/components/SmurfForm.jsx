@@ -6,12 +6,13 @@ import { useSelector, useDispatch } from 'react-redux';
 const SmurfForm = () => {
   const input = useSelector(state => state.smurfFormInput);
   const isEditMode = useSelector(state => state.isEditMode);
+  const editSmurfId = useSelector(state => state.editSmurfId);
   const dispatch = useDispatch();
 
   const handleSubmit = e => {
     e.preventDefault();
     if (input.name.length > 0 && input.age > 0 && input.height.length > 0) {
-      dispatch(handleSmurfFormSubmit(input, isEditMode));
+      dispatch(handleSmurfFormSubmit(input, isEditMode, editSmurfId));
     }
   }
 

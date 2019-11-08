@@ -11,7 +11,7 @@ const Smurfs = props => {
   const smurfList = props.smurfs;
 
   const changeSmurf = id => {
-    console.log('Edit:', smurfList.find(smurf => smurf.id === id));
+    dispatch(editSmurf(smurfList.find(smurf => smurf.id === id)));
   }
 
   const removeSmurf = id => {
