@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { handleSmurfForm, addSmurf } from '../actions/actions';
+import { handleSmurfForm, handleSmurfFormSubmit } from '../actions/actions';
 import { useSelector, useDispatch } from 'react-redux';
 
 const SmurfForm = () => {
-  const input = useSelector(state => state.addSmurfFormInput);
+  const input = useSelector(state => state.smurfFormInput);
   const dispatch = useDispatch();
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('Form data:', input);
+    dispatch(handleSmurfFormSubmit(input));
   }
 
   const handleChange = e => {
@@ -18,9 +18,9 @@ const SmurfForm = () => {
 
   return (
     <form className="smurf-form" onSubmit={handleSubmit}>
-      <input type="text" name="smurfName" placeholder="Enter name..." />
-      <input type="text" name="smurfAge" placeholder="Enter age..." />
-      <input type="text" name="smurfHeight" placeholder="Enter height..." />
+      <input type="text" name="name" placeholder="Enter name..." onChange={handleChange} />
+      <input type="number" name="age" placeholder="Enter age..." onChange={handleChange} />
+      <input type="text" name="height" placeholder="Enter height..." onChange={handleChange} />
       <button>Submit</button>
     </form>
   )

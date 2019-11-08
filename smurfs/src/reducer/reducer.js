@@ -1,7 +1,11 @@
 import * as ACTIONS from '../actions/actions';
 
 const initialState = {
-  smurfFormInput: {},
+  smurfFormInput: {
+    name: '',
+    age: '',
+    height: ''
+  },
   smurfs: [],
   error: '',
   isFetching: false
@@ -30,6 +34,23 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         smurfFormInput: action.payload
+      }
+    case ACTIONS.HANDLE_SMURF_FORM_SUBMIT_START:
+      return {
+        ...state,
+        error: '',
+        isFetching: true
+      }
+    case ACTIONS.HANDLE_SMURF_FORM_SUBMIT_SUCCESS:
+      return {
+        ...state,
+        smurfs: action.payload
+      }
+    case ACTIONS.HANDLE_SMURF_FORM_SUBMIT_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        isFetching: false
       }
     default:
       return state;
