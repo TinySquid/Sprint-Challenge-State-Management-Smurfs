@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { getSmurfs } from '../actions/actions';
 import { useSelector, useDispatch } from 'react-redux';
 
+import SmurfForm from './SmurfForm';
 import Smurfs from './Smurfs';
 
 import "./App.css";
@@ -20,6 +21,7 @@ const App = props => {
   return (
     <div className="App">
       <h1>SMURFS! 2.0 W/ Redux</h1>
+      <SmurfForm />
       <Smurfs smurfs={smurfs} />
     </div>
   );

@@ -17,3 +17,12 @@
   box-shadow: 0 0 5px 1px rgb(0, 0, 0, 0.2);
   border: 1px solid rgb(0, 0, 0, 0.4);
 }
+
+.smurf-form input {
+    padding: .3rem;
+    margin: .3rem;
+}
+
+.smurf-form button {
+  padding: 0.24rem 1rem;
+}
